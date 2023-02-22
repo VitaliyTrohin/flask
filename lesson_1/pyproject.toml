@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "lesson-1"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "lesson_1"}]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+flask = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
