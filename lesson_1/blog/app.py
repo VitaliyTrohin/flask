@@ -22,11 +22,7 @@ def read_user():
 @app.route("/status/", methods=["GET", "POST"])
 def custom_status_code():
     if request.method == "GET":
-        return """\
-        To get response with custom status code
-        send request using POST method
-        and pass `code` in JSON body / FormData
-        """
+        return
     
     print("raw bytes data:", request.data)
 
@@ -40,17 +36,13 @@ def custom_status_code():
 
 @app.before_request
 def process_before_request():
-    """
-    Sets start_time to `g` object
-    """
+
     g.start_time = time()
 
 
 @app.after_request
 def process_after_request(response):
-    """
-    adds process time in headers
-    """
+
     if hasattr(g, "start_time"):
         response.headers["process-time"] = time() - g.start_time
     return response
@@ -81,3 +73,19 @@ def handle_zero_division_error(error):
     print(error) # prints str version of error: 'division by zero'
     app.logger.exception("Here's traceback for zero division error")
     return "Never divide by zero!", 400
+
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+from blog.views.users import users_app
+from blog.views.articles import articles_app
+
+app.register_blueprint(users_app, url_prefix="/users")
+app.register_blueprint(articles_app, url_prefix="/articles")
