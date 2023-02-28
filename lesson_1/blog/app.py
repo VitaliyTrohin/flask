@@ -89,3 +89,18 @@ from blog.views.articles import articles_app
 
 app.register_blueprint(users_app, url_prefix="/users")
 app.register_blueprint(articles_app, url_prefix="/articles")
+
+
+from blog.models.database import db
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:////tmp/blog.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db.init_app(app)
+
+
+from blog.views.auth import login_manager, auth_app
+
+# для работы авторизации нам обязательно нужен SECRET_KEY в конфигурации, добавляем
+app.config["SECRET_KEY"] = "abcdefg123456"
+app.register_blueprint(auth_app, url_prefix="/auth")
+login_manager.init_app(app)
