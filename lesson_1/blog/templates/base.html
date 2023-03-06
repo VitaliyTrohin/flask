@@ -28,6 +28,12 @@
         </a>
         {% endif %}
     </div>
+    {% for (endpoint, label) in [('auth_app.login', 'Login'), ('auth_app.register',
+    'Register')] %}
+    <a href="{{ url_for(endpoint) }}" class="nav-link {% if request.endpoint == endpoint -%}active{%- endif %}">
+        {{ label }}
+    </a>
+    {% endfor %}
 
     {% block js %}
 
