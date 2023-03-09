@@ -138,3 +138,8 @@ def create_admin():
     db.session.commit()
 
     print("created admin:", admin)
+
+
+from blog.views.authors import authors_app
+
+app.register_blueprint(authors_app, url_prefix="/authors")    
